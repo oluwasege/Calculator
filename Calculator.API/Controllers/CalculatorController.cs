@@ -17,9 +17,33 @@ namespace Calculator.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PerformCalculation([FromBody]CalculationVM model)
+        [ProducesResponseType(typeof(CalculationResultVM), 200)]
+        public async Task<IActionResult> PerformCalculation([FromBody] CalculationVM model)
         {
+            try
+            {
+                var result = await _calculatorService.PerformCalculation(model);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(CalculationsHistoryVM), 200)]
+        public async Task<IActionResult> GetCalculations()
+        {
+            try
+            {
+                var result = await _calculatorService.GetCalculations();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

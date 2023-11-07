@@ -2,6 +2,7 @@
 using Calculator.Core.Models;
 using Clalculator.Service.Interfaces;
 using Clalculator.Service.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,10 @@ namespace Clalculator.Service
 
         public async Task<ResultModel<CalculationResultVM>> PerformCalculation(CalculationVM model)
         {
-            var resultModel = new ResultModel<CalculationResultVM>();
+            var resultModel = new ResultModel<CalculationResultVM>() { Data = new CalculationResultVM() };
             try
             {
-                switch (model.Operation)
+                switch (model.Operation?.ToLower())
                 {
                     case "add":
                         resultModel.Data.Result = model.Num1 + model.Num2;
@@ -52,7 +53,7 @@ namespace Clalculator.Service
                 {
                     Num1 = model.Num1,
                     Num2 = model.Num2,
-                    Operation = model.Operation,
+                    Operation = model.Operation?.ToLower(),
                     Result = resultModel.Data.Result
                 });
 
@@ -68,6 +69,21 @@ namespace Clalculator.Service
 
         }
 
-        public async Task<ResultModel<List<>
+        public async Task<ResultModel<List<CalculationsHistoryVM>>> GetCalculations()
+        {
+            var resultModel = new ResultModel<List<CalculationsHistoryVM>>() { Data = new List<CalculationsHistoryVM>() };
+            var result = await _context.Calculations.Select(x => new CalculationsHistoryVM
+            {
+                Id = x.Id,
+                Num1 = x.Num1,
+                Num2 = x.Num2,
+                Operation = x.Operation,
+                Result = x.Result
+            }).ToListAsync();
+
+            resultModel.Data = result;
+            return resultModel;
+        }
+
     }
 }

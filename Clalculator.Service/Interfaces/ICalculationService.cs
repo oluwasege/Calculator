@@ -10,5 +10,6 @@ namespace Clalculator.Service.Interfaces
     public interface ICalculationService
     {
         Task<ResultModel<CalculationResultVM>> PerformCalculation(CalculationVM model);
+        Task<ResultModel<List<CalculationsHistoryVM>>> GetCalculations();
     }
 }
