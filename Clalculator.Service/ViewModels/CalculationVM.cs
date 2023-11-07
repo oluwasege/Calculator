@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Calculator.Core.Models
+namespace Clalculator.Service.ViewModels
 {
-    public class Calculation
+    public class CalculationVM
     {
-        public int Id { get; set; }
         public double Num1 { get; set; }
         public double Num2 { get; set; }
         public string? Operation { get; set; }
-        public double Result { get; set; }
     }
 }

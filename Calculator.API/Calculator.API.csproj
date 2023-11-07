@@ -17,4 +17,8 @@
 		<Folder Include="Controllers\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Clalculator.Service\Clalculator.Service.csproj" />
+	</ItemGroup>
+
 </Project>
